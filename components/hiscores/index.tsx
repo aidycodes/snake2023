@@ -11,8 +11,7 @@ const HiScores = () => {
     const scores = data?.map((score: any, i: number) => (
        <ScoreComponent name={score.content.name} score={score.content.score} id={score.key} index={i} key={score.key}/> 
     ))
- 
-console.log(data)
+
   return (
   
     <div className="glass absolute w-full top-16 right-0 lazyfade1 ">
@@ -24,7 +23,7 @@ console.log(data)
         {data ?
         scores
         :
-        <p>loading</p>
+       <div className="loader"/>
 }
        
     </div>

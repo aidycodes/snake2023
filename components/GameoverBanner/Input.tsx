@@ -15,15 +15,17 @@ import { Score } from '../../pages/api/getscores'
         throw err
     }
 }
-const Input = ({score}:{score: number}) => {
+const Form = ({score}:{score: number}) => {
 
     const [input, setInput] = useState('')
+    const [status, setStatus] = useState<boolean | string>('error')
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 
      const mutation = useMutation({
         mutationFn: submit,
         onMutate: async() => {
+            setStatus('loading')
             await queryClient.cancelQueries({queryKey:['scores']})
             const previousScores = queryClient.getQueriesData(['scores'])  
             console.log(previousScores)    
@@ -36,12 +38,12 @@ const Input = ({score}:{score: number}) => {
         onError(error, variables, context) {
             console.log('err')
             if(context){
-                
+              setStatus('error')  
             queryClient.setQueryData(['scores'], context.previousScores[0][1])
             }
         },
         onSuccess:() => {
-             console.log('succ')
+             setStatus('success')
             queryClient.invalidateQueries({queryKey:['scores']})
            
         },
@@ -61,10 +63,19 @@ const Input = ({score}:{score: number}) => {
     }
   return (
     <div>
-      <input onClick={(e) => handleFocus(e)} ref={inputRef} maxLength={3} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={() => mutation.mutate({name:input, score:score})}>Submit</button>
+        <div className="flex justify-center my-4">
+        <input className="input"
+        onClick={(e) => handleFocus(e)} ref={inputRef} maxLength={3} onChange={(e) => setInput(e.target.value)} />
+        <button className="px-4 py-2 mx-2 text-neutral-100  button border-neutral-100 border" onClick={() => mutation.mutate({name:input, score:score})}>Submit</button>
+           
+        </div>
+         {status && status === "success" ? <div className="flex justify-center space"><p className="text-white">Your Score Was Successfully Recorded</p></div> :
+          status === "error" ? <div className="flex justify-center space"><p className="errorred">whoops, an <span className="font-bold">error</span> has occured please try again</p></div> :
+           status === 'loading' ? <div className="flex justify-center"><div className="lds-ellipsis mx-auto"><div></div><div></div><div></div><div></div></div></div>
+         : null
+         }
     </div>
   )
 }
 
-export default Input
+export default Form
