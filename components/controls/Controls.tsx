@@ -1,5 +1,6 @@
 import React, { Suspense, useContext, useEffect, useRef } from 'react'
 import { SnakeContext } from '../../context/snakecontext'
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 //import MiniMap from '../minimap'
 import Modal from '../modal'
 import Button from './button/Button'
@@ -50,7 +51,7 @@ const Controls = () => {
 
   return (
    
-    <div className="inline-flex flex-col my-20 bg-blue-500  p-2 rounded-md ml-0 shadow-lg">
+    <div className="inline-flex flex-col my-20 bg-blue-500  p-2 rounded-md ml-0 shadow-lg mediacontrol">
        <Button  onClick={() => handleOpenPlayModal()}>how to play</Button>
                <div className="inline-block"><Difficulty level={options.level} handleOptions={handleOptions}/></div>
      
@@ -63,7 +64,13 @@ const Controls = () => {
      <div className=" p-2 text-lg play playtext text-blue-200 rounded-md ">In the game of Snake, the player uses the <span className="font-bold playtitle text-green-400">WASD</span> to move a "snake" around the board. As the snake finds food, it eats the food, and thereby grows larger. The game ends when the snake either moves off the screen or moves into itself. The goal is to make the snake as large as possible before that happens.</div></></Modal>
        </div>
      <div className="relative">
-     <Modal type="map" ref={mapRef}><Suspense fallback={<div>Loading Maps</div>}><MiniMap/></Suspense></Modal>
+    <Modal type="map" ref={mapRef}>
+      <ErrorBoundary>
+        <Suspense fallback={<div>Loading Maps</div>}>
+            <MiniMap/>
+        </Suspense>
+      </ErrorBoundary>
+    </Modal>
      </div>
      <div className="z-0">
    

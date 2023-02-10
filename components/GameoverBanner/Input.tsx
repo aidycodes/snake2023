@@ -18,7 +18,7 @@ import { Score } from '../../pages/api/getscores'
 const Form = ({score}:{score: number}) => {
 
     const [input, setInput] = useState('')
-    const [status, setStatus] = useState<boolean | string>('error')
+    const [status, setStatus] = useState<boolean | string>(false)
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 

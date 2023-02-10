@@ -12,9 +12,9 @@ const Bar = ({level, index, handleOptions, barsHover, setBarsHover}:
     {start || paused ? 
       <div>
         <div     
-    className={index <= level ? "h-12 w-3 m-1 rotate-12 bg-blue-300 rounded-md cursor-pointer" : 
-    index <= barsHover ? "h-12 w-3 m-1 rotate-12 bg-blue-400 rounded-md cursor-pointer" : 
-    "h-12 w-3 m-1 rotate-12 bg-blue-700 rounded-md cursor-pointer"}>
+    className={index <= level ? "h-12 w-3 m-1 rotate-12 bg-blue-300 rounded-md cursor-pointer mediapill" : 
+    index <= barsHover ? "h-12 w-3 m-1 rotate-12 bg-blue-400 rounded-md cursor-pointer mediapill" : 
+    "h-12 w-3 m-1 rotate-12 bg-blue-700 rounded-md cursor-pointer mediapill"}>
         <div className=""></div>
 </div>
     </div>
@@ -23,9 +23,9 @@ const Bar = ({level, index, handleOptions, barsHover, setBarsHover}:
      
     <div 
     onClick={() => handleOptions({level:index})} 
-    className={index <= level ? "h-12 w-3 m-1 rotate-12 bg-blue-300 rounded-md cursor-pointer" : 
-    index <= barsHover ? "h-12 w-3 m-1 rotate-12 bg-blue-400 rounded-md cursor-pointer" : 
-    "h-12 w-3 m-1 rotate-12 bg-blue-700 rounded-md cursor-pointer"}>
+    className={index <= level ? "h-12 w-3 m-1 rotate-12 bg-blue-300 rounded-md cursor-pointer mediapill" : 
+    index <= barsHover ? "h-12 w-3 m-1 rotate-12 bg-blue-400 rounded-md cursor-pointer mediapill" : 
+    "h-12 w-3 m-1 rotate-12 bg-blue-700 rounded-md cursor-pointer mediapill"}>
         <div className=""></div>
 </div>
     </div>

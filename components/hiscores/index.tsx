@@ -5,7 +5,7 @@ import { fetchScores } from '../../lib/fetchers'
 
 
 
-const HiScores = () => {
+const HiScores = ({setShowHiScores}:{setShowHiScores:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
  const {data} = useQuery({ queryKey: ['scores'], queryFn: fetchScores })
     const scores = data?.map((score: any, i: number) => (
@@ -14,12 +14,8 @@ const HiScores = () => {
 
   return (
   
-    <div className="glass absolute w-full top-16 right-0 lazyfade1 ">
-        <div className="flex justify-between p-1 m-1">
-            <h2>Pos</h2>
-            <h2>Name</h2>
-            <h2>Score</h2>
-        </div>
+    <div className="glass absolute w-full top-16 right-0 lazyfade1 mediascores p-2 ">
+      <div onClick={() => setShowHiScores(false)} className="absolute text-white z-10 xposition cursor-pointer scoreX ">x</div>
         {data ?
         scores
         :

@@ -15,8 +15,8 @@ const bars = quickArray.map((item, i) => (<Bar barsHover={barsHover} setBarsHove
 
   return (
     <div className={start || paused ? "diffglass-disabled rounded-md " : "diffglass rounded-md shadow-md"} >
-        <h2 className="font-mono text-xl px-1 mx-2 text-blue-900">Difficulty:</h2>
-        <div className="flex mx-8">
+        <h2 className="font-mono text-xl px-1 mx-2 text-blue-900 mediafont">Difficulty:</h2>
+        <div className="flex mx-8 media-allpill">
             {bars}
         </div>
     </div>

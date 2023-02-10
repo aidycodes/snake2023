@@ -28,7 +28,7 @@ const boardd = board.map(((row, i) => (
 
   return (
     <>
-      <div onClick={() => focusFunction()} className="border border-red-400 p-4 mr-0 relative">
+      <div onClick={() => focusFunction()} className="border border-red-400 p-4 mr-0 relative board-boarder">
     
     <div className="flex justify-center ">
       

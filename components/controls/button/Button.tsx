@@ -13,7 +13,7 @@ const Button = ({children, onClick}:{children:string, onClick:() => void}) => {
     </div> 
     :
     <div onClick={ !start || !paused ? () => onClick() : () => {}} className={ start || paused ?  'diffglass-disabled mainbutton-disabled my-4' : 'diffglass mainbutton my-4'} >
-        <h4 className="text-center">{children}</h4>
+        <h4 className="text-center button-text">{children}</h4>
     </div>
   }
   </>

@@ -24,8 +24,10 @@ const Gameover = ({score}:{score:number}) => {
 
   return (
     <>
-    {show &&
-    <div className="glass absolute gameoveposition gameover p-10 rounded-md shadow-sm gameoversize">
+    {show && data &&
+    <div className={currentScore > data[data.length-1].content.score ? "glass absolute gameoveposition gameover p-10 rounded-md shadow-sm gameoversize"
+  : "glass absolute gameoveposition gameover p-10 rounded-md shadow-sm "
+  }>
       <div onClick={() => setShow(false)} className="text-xl font-bold text-blue-700 hover:text-blue-400 cursor-pointer absolute right-0 p-4 top-0">X</div>
       <p className="text-red-500 text-4xl text-center font-mono">Game Over!</p>
       <p className="text-purple-600 text-xl py-2">Your Score: {(score * options.level) + bonus.score * (options.level*2)}</p>
@@ -33,9 +35,9 @@ const Gameover = ({score}:{score:number}) => {
       {
       data ? 
       
-      currentScore > data[data.length-1].content.score
+      currentScore < data[data.length-1].content.score
    ?
-      <p>Sorry you did not make the Hi-score list this time <span className='text-blue-700 cursor-pointer hover:text-blue-500'>try again!</span></p>
+      <p>Sorry you did not make the Hi-score list this time. </p>
        :   
         <>  <p>Congratulations You Made The Leaderboards! Please Enter Your Name To Submit Your Score!</p>
         {console.log(data[data.length-1])}
