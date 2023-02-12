@@ -46,7 +46,7 @@ const boardd = board.map(((row, i) => (
       
     </div>
     <form>
-    <label for="controls" className="opacity-0">controls</label></form>
+    <label htmlFor="controls" className="opacity-0">controls</label></form>
       <input ref={controlRef} type="text" value="" onChange={(e) => handleInput(e)} className="h-0 bg-pink-600  cursor-default opacity-0"></input>
     
     </>
