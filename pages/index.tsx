@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import React, { Suspense, useState, useEffect } from 'react';
-
+import Head from 'next/head'
 import Board from '../components/board/Board';
 import Bonus from '../components/bonus.tsx/bonus';
 import Button from '../components/controls/button/Button';
@@ -39,6 +39,13 @@ const Home: NextPage = () => {
   return (
     <SnakeProvider>
     <QueryClientProvider client={queryClient}>
+        <Head>
+        <title>Next Snake</title>
+        <meta name="description" content="Snake Game" />
+      </Head>
+      
+       
+      
     <div className="bg-blue-500  media-app">
    <Warning/>
      <p className="text-blue-300 aoc">AoC2023</p>
