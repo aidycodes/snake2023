@@ -43,6 +43,10 @@ code {
     monospace;
 }
 
+.media-app {
+  min-height: 100vh;
+}
+
 .score-font {
   color: white;
 }
@@ -72,6 +76,10 @@ code {
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
   padding: 1rem;
   transition: 0.1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 80px;
 }
 
 .mainbutton-disabled {
@@ -372,7 +380,7 @@ code {
 }
 
 .gameoversize {
-  min-height: 380px;
+  min-height: 280px;
 }
 
 .space {
@@ -428,6 +436,15 @@ code {
   width: 14rem;
 }
 
+.start-reset {
+  width: 100vw;
+}
+.inner-start {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
 @media (max-width: 1225px) {
   .mainflex {
     display: inline-grid;
@@ -456,6 +473,14 @@ code {
     grid-row-start: 2;
     grid-row-end: 2;
   }
+
+  .start-reset {
+    width: 70%;
+    align: right;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
   .mediacontrol {
     margin: 0;
   }
@@ -621,6 +646,9 @@ code {
   .button-text {
     font-size: 14px;
   }
+  .mainbutton {
+    margin: 4px;
+  }
 }
 
 @media (max-width: 667px) {
@@ -650,8 +678,6 @@ code {
     margin: 0;
     padding: 0rem;
   }
-  .mainbutton {
-  }
 }
 @media (max-width: 575px) {
   .warning-pop-up {
@@ -664,6 +690,15 @@ code {
   }
   .fontsize {
     font-size: 10px;
+  }
+}
+
+@media ((max-height: 885px) and (max-width: 743px)) {
+  .title {
+    top: 820px;
+    left: -630px;
+    font-size: 40px;
+    opacity: 0.5;
   }
 }
 

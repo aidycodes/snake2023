@@ -39,7 +39,7 @@ const Home: NextPage = () => {
   return (
     <SnakeProvider>
     <QueryClientProvider client={queryClient}>
-    <div className="bg-blue-500 h-screen media-app">
+    <div className="bg-blue-500  media-app">
    <Warning/>
      <p className="text-blue-300 aoc">AoC2023</p>
    
@@ -77,9 +77,11 @@ const Home: NextPage = () => {
  </div>
      </div>
 
-        <div className="flex  justify-center closer gap-10  ">
+        <div className=" start-reset  ">
+          <div className="inner-start">
        <StartButton/>
        <ResetButton/>
+       </div>
         <h2 className="title2 shadows">Snake</h2>
       
     </div>

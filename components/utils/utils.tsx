@@ -29,7 +29,7 @@ export const findCoords = (board: string[][], position: string, appleCount: numb
                 xy.x = -1
                 return xy
             }
-           console.log(xy, position)
+          
             return xy   
         },{y:0, x:0, found:0})
         return coords

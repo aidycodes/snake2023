@@ -1,7 +1,5 @@
 import { createContext, Dispatch, ReactNode, useCallback, useEffect, useState } from "react";
-import { idText } from "typescript";
 import useInterval from "../components/hooks/useInterval";
-
 import { findCoords } from "../components/utils/utils";
 import { gameboards } from "../lib/boards";
 
@@ -74,7 +72,7 @@ const SnakeProvider = ({children}:{children:ReactNode}) =>  {
 
 
 
-
+//feature structuredClone does not seem to work with next/typescript currently 
 //const boards = structuredClone(gameboards)
 const boards = JSON.parse(JSON.stringify(gameboards))
 
@@ -370,7 +368,7 @@ useInterval(() => {
 if(typeof bonus.timeOut === 'number'){
     if(bonus.timeOut >= 1){       
         setBonus({...bonus, timeOut:bonus.timeOut-1})
-        console.log(bonus.timeOut)
+        
     }
     if(bonus.timeOut === 0){
         setBonus({...bonus, timeOut:false})
@@ -433,16 +431,26 @@ const handleStart = () => {
 }
 
 const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value.toLowerCase()
+    console.log({input, direction})
     if(go){
-    if(score === 0){
-        setDirection(e.target.value)
+        if(score === 0){
+    if( 
+        (input === 'a' ) ||
+      (input === 'd' ) ||
+       (input === 's') ||
+        (input === 'w' ) ){
+        setDirection(input.toLowerCase())
         setGo(false)
-    }
-     if((e.target.value === 'a' && direction !== 'd') ||
-      (e.target.value === 'd' && direction !== 'a') ||
-       (e.target.value === 's' && direction !== 'w') ||
-        (e.target.value === 'w' && direction !== 's')){
-        setDirection(e.target.value)
+    } 
+}
+     if
+     ((input === 'a' && direction != 'd') ||
+      (input === 'd' && direction != 'a') ||
+       (input === 's' && direction != 'w') ||
+        (input === 'w' && direction != 's')) { 
+            console.log('meep')
+        setDirection(e.target.value.toLowerCase())
         setGo(false)
      } 
     }
