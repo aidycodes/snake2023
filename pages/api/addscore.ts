@@ -15,17 +15,18 @@ const addScore = async(req: NextApiRequest,res: NextApiResponse) => {
         
         if(sortedObjs.length >= 10){      
             const lowestScore = sortedObjs[sortedObjs.length-1]
+            // @ts-expect-error
             if(lowestScore && req.body.score > lowestScore.content.score){
-                // Remove lowest score and add new one
+             
                 await client.hdel("hiscores", lowestScore.key);
                 await client.hset("hiscores", Date.now().toString(), JSON.stringify(req.body))
             } else {
-                // New score is not high enough to be in top 10
+              
                 res.send(sortedObjs)
                 return
             }
         } else {
-            // Less than 10 scores, just add the new one
+        
             await client.hset("hiscores", Date.now().toString(), JSON.stringify(req.body))  
         }
         
