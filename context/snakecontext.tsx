@@ -112,26 +112,6 @@ const boards = JSON.parse(JSON.stringify(gameboards))
         } 
     }
 
-    const moveTail1 = (length: number, position: string , x1: number, y1: number, updatedBoard: string[][] ): void => {
-    
-
-    
-        for(let i = +position; length >= +position ; i++){
-        
-            let {x, y} = findCoords(updatedBoard, i.toString(), numberOfApples)
-            position = i.toString() 
-           if(x === -1 && y === -1){
-            updatedBoard[y1][x1] = position
-            return
-        }
-            updatedBoard[y][x] = ""
-             updatedBoard[y1][x1] = position
-             
-              x1 = x
-              y1 = y
-
-    }
-    }
 
     // for(let i = position; score >= position ; i++){
     //     let {x, y} = findCoords(updatedBoard, position, numberOfApples)
@@ -185,7 +165,7 @@ const boards = JSON.parse(JSON.stringify(gameboards))
         
 
 
-                moveTail1(score,"1", x, y, updatedBoard)
+                moveTail(score,"1", x, y, updatedBoard)
     
             }
             setBoard([...updatedBoard])
@@ -218,7 +198,7 @@ const boards = JSON.parse(JSON.stringify(gameboards))
                 
                 setBoard([...updatedBoard])  
                 setGo(true) 
-                moveTail1(score,"1", x, y, updatedBoard)
+                moveTail(score,"1", x, y, updatedBoard)
 
             
             return
@@ -248,7 +228,7 @@ const boards = JSON.parse(JSON.stringify(gameboards))
                 if(x === -1){
                     x = board.length
                 }
-                moveTail1(score,"1", x, y, updatedBoard)
+                moveTail(score,"1", x, y, updatedBoard)
 
             setBoard([...updatedBoard])
              setGo(true)
@@ -279,7 +259,7 @@ const boards = JSON.parse(JSON.stringify(gameboards))
                 if(x === 11){
                     x = 0
                 }   
-                moveTail1(score,"1", x, y, updatedBoard)
+                moveTail(score,"1", x, y, updatedBoard)
 
             setBoard([...updatedBoard])
              setGo(true)
@@ -327,26 +307,45 @@ const handleNumberOfApples = (count: number) => {
     setNumberOfApples(count)
 }
 
-const cachedApple = useCallback((number: number = numberOfApples) =>{
-    const generateApple = (number: number = numberOfApples) => {
-        if(appleCount < numberOfApples){
-    const {found} = findCoords(board, 'O', number)
-    if(found < numberOfApples){
-    let x = Math.floor(Math.random() * board[0].length-1) + 1
-    let y = Math.floor(Math.random() * board.length-1) + 1
-    if(board[y][x]){
-        generateApple(1)
-        return
-    }
-    const updatedBoard = [...board]
-    updatedBoard[y][x] = 'O'
-    setBoard([...updatedBoard])
-    setAppleCount((appleCount) => appleCount+1)
-}
-}
-}  
-generateApple(number)
-} ,[board, numberOfApples])
+const cachedApple = useCallback((targetCount: number = numberOfApples) =>{
+    console.log('cachedApple called with targetCount:', targetCount, 'numberOfApples:', numberOfApples)
+    const generateApple = (count: number) => {
+        // Check if we need more apples (accounting for the one that was just eaten)
+        const currentAppleCount = findCoords(board, 'O', numberOfApples).found
+        console.log('currentAppleCount:', currentAppleCount, 'targetCount:', targetCount)
+        
+        // Only subtract 1 if we're replacing an eaten apple (when appleCount is being decremented)
+        // At game start, appleCount is 0, so we don't subtract 1
+        const shouldSubtractOne = appleCount > 0 && targetCount === numberOfApples
+        const actualAppleCount = shouldSubtractOne ? currentAppleCount - 1 : currentAppleCount
+        console.log('actualAppleCount (after adjustment):', actualAppleCount, 'shouldSubtractOne:', shouldSubtractOne, 'appleCount:', appleCount)
+        
+        if(actualAppleCount < targetCount){
+            console.log('Generating apple, current:', actualAppleCount, 'target:', targetCount)
+            let x = Math.floor(Math.random() * board[0].length-1) + 1
+            let y = Math.floor(Math.random() * board.length-1) + 1
+            if(board[y][x]){
+                console.log('Collision, retrying')
+                generateApple(count)  // Try again with same count
+                return
+            }
+            const updatedBoard = [...board]
+            updatedBoard[y][x] = 'O'
+            setBoard([...updatedBoard])
+            setAppleCount((appleCount) => appleCount+1)
+            console.log('Apple generated at:', x, y)
+            
+            // Recursively generate more apples if needed
+            if(actualAppleCount + 1 < targetCount){
+                console.log('Generating more apples')
+                generateApple(count)
+            }
+        } else {
+            console.log('No more apples needed')
+        }
+    }  
+    generateApple(targetCount)
+} ,[board, numberOfApples, appleCount])
 
 const generateBonus = () => {
     const {y} = findCoords(board, 'B', numberOfApples)
@@ -403,12 +402,16 @@ useEffect(() => {
             cachedReset()
         setGameOver(false)
         }
-       
-    cachedApple()
-   
-    
     }
-},[start, gameOver, cachedReset, cachedApple])
+},[start, gameOver, cachedReset])
+
+// Separate useEffect for initial apple generation
+useEffect(() => {
+    if(start && !gameOver && appleCount === 0){
+        // Only generate initial apple when game starts and no apples exist
+        cachedApple()
+    }
+},[start, gameOver, appleCount])
 
 
 const handleStart = () => {
@@ -473,7 +476,7 @@ const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 const handleAppleCollection = () => {
     setScore((score: number) => score+1)
-    cachedApple(1)
+    cachedApple()
 }
 const handleBonusCollection = () => {
     setBonus({timeOut:false, score:bonus.score+1})

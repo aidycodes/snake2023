@@ -8,6 +8,7 @@ import { fetchScores } from '../../lib/fetchers'
 const HiScores = ({setShowHiScores}:{setShowHiScores:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
  const {data} = useQuery({ queryKey: ['scores'], queryFn: fetchScores })
+ console.log(data)
     const scores = data?.map((score: any, i: number) => (
        <ScoreComponent name={score.content.name} score={score.content.score} id={score.key} index={i} key={score.key}/> 
     ))
